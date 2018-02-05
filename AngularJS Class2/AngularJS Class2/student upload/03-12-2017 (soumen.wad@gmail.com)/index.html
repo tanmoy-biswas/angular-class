@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Class task</title>
+    <script
+    src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+	<div id="inputDiv">
+        Input fields will apper here
+    </div>
+
+	<p>See your result</p>	
+	<table border="1">
+		<thead>
+			<th>Name</th>
+			<th>Email</th>
+			<th>Date of birth</th>
+		</thead>
+		<tbody id="show_result">
+			
+		</tbody>
+	</table>
+
+</body>
+
+<script type="text/javascript">
+    var myModule = (function() {
+      var input = (function() {
+        var  numberOfStudents = parseInt(window.prompt("Enter how many data u want to give:"));
+        var template = `
+        <div>
+            <label> Enter name here</label>
+            <input type="text" name="" id="" placeholder="Enter you Name">
+	        <label> Enter email here</label>
+            <input type="Email" name="" id="" placeholder="Enter you Email">
+	        <label> Enter dateOf birth here</label>
+            <input type="text" name="" id="" placeholder="Enter you Date of birth">
+        </div>
+        `;
+        var finalTemplate = "";
+        for(var index = 1; index<=numberOfStudents; index++) {
+            finalTemplate += template;
+            alert(finalTemplate);
+        }
+        document.getElementById("inputDiv").innerHTML = finalTemplate;
+      });
+      input(); 
+
+    });
+    myModule();
+
+</script>
+
+</html>
+

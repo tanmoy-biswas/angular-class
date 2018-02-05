@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+
+</head>
+
+<body>
+    <label>Please enter number of students:</label>
+    <input type=number name=stNum id="stud_num" />
+    <button id="ok">OK</button>
+    <div id="inputform">
+
+    </div>
+    <div>
+        <table border="1" cellpadding="5" cellspacing="0" id="st_table">
+            <thead>
+                <tr>
+                    <th>student name</th>
+                    <th>Email</th>
+                    <th>Date of birth</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="studentdata">
+
+            </tbody>
+        </table>
+    </div>
+    <script type=text/javascript>
+        var numberOfStudent;
+        var studentArray = [];
+        var student_module = (function() {
+            this.input_module = (function() {
+                document.getElementById("ok").onclick = function() {
+                    numberOfStudent = document.getElementById("stud_num").value;
+                    alert('student number:' + numberOfStudent);
+
+                    generate_form();
+
+                    function generate_form() {
+                        var finaltemp = "";
+
+                        for (var index = 1; index <= numberOfStudent; index++) {
+
+                            var temp =
+                                `<div>
+                            <input type="text" name="" id="s_name_` +
+                                index +
+                                `" placeholder="enter student name"/>
+<input type="email" name="" id="s_email_` +
+                                index +
+                                `"placeholder="enter student email" />
+<input type="text" name="" id="s_dob_` +
+                                index + `" placeholder="enter date of birth" />
+     </div>`;
+                            finaltemp += temp;
+                        }
+                        finaltemp +=
+                            `<button id="submit" onclick="(new student_module()).output_module()">submit</button>`;
+                        document.getElementById("inputform").innerHTML = finaltemp;
+
+                    }
+
+                };
+
+            });
+
+
+
+            //output of entered data
+            this.output_module = (function() {
+                
+                var Stdnt_json = {};
+                for (var index = 1; index <= numberOfStudent; index++) {
+
+                    var name = document.getElementById("s_name_" + index).value;
+                    var email = document.getElementById("s_email_" + index).value;
+                    var dob = document.getElementById("s_dob_" + index).value;
+                    console.log(name);
+                    console.log(email);
+                    console.log(dob);
+                    Stdnt_json["name"] = name;
+                    Stdnt_json["email"] = email;
+                    Stdnt_json["dob"] = dob;
+
+                    studentArray.push(Stdnt_json);
+
+                }
+                print_record();
+
+                function print_record() {
+                    console.log(studentArray);
+                    var recrow = "";
+                    for (var index = 0; index < numberOfStudent; index++) {
+                        recrow += `<tr id="stRow_` + index + `">
+                        <td>` +
+                            studentArray[index]["name"] +
+                            `</td>
+<td>` + studentArray[index]["email"] +
+                            `</td>
+                        <td>` + studentArray[index]["dob"] +
+                            `</td>
+<td>
+    <button id="delete_` + index + `" onclick="(new student_module()).deleteRow(` +
+                            index + `)">delete</button>
+</td>
+                                </tr>`;
+
+                    }
+                    document.getElementById("studentdata").innerHTML = recrow;
+
+                    
+
+                };
+            });
+            this.deleteRow = (function (index) {
+                console.log(index);
+                document.getElementById("stRow_" + index).style.display = "none";
+            });
+        });
+        (new student_module()).input_module();
+    </script>
+</body>
+
+</html>

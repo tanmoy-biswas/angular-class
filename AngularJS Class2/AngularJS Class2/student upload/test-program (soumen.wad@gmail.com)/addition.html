@@ -1,0 +1,71 @@
+<html>
+    <head>
+        <script>
+            function addition(w, x, y, z) {
+	var p;
+  p = w+x+y+z;
+  return p;
+}
+/*
+function multiplication(w, x, y, z) {
+	var p;
+  p = w*x*y*z;
+  return p;
+}
+*/
+
+
+function showResult() {
+	var a=parseInt(document.getElementById("number1").value);
+var b=parseInt(document.getElementById("number2").value);
+var c=parseInt(document.getElementById("number3").value);
+var d=parseInt(document.getElementById("number4").value);
+
+  var result = addition(a, b, c, d);
+	document.getElementById("result").innerHTML = result;
+}
+
+/*
+
+a=parseInt(prompt("Eter the number"));
+b=parseInt(prompt("Eter the number"));
+c=parseInt(prompt("Eter the number"));
+d=parseInt(prompt("Eter the number"));
+
+
+result = multiplication(a,b,c,d);
+alert(result);
+*/
+        </script>
+    </head>
+    <body>
+            <p>
+                    enter first number
+                    </p>
+                    <input type="text" id="number1">
+                    <br>
+                    <p>
+                    enter second number
+                    </p>
+                    <input type="text" id="number2">
+                    <br>
+                    <p>
+                    enter third number
+                    </p>
+                    <input type="text" id="number3">
+                    <br>
+                    <p>
+                    enter fourth number
+                    </p>
+                    <input type="text" id="number4">
+                    
+                    <br>
+                    <button onclick="showResult()">
+                    click me to show addition result
+                    </button>
+                    
+                    <p>
+                    the addition result is <label id="result"></label>
+                    </p>
+    </body>
+    </html>

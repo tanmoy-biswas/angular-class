@@ -1,0 +1,14 @@
+http://api.openweathermap.org/data/2.5/forecast/daily?q=delhi&cnt=14&APPID=b35e5e51128992747a9393ab8ba53b8b
+
+http://api.openweathermap.org/data/2.5/forecast/daily
+
+q=delhi
+
+cnt=14
+
+APPID=b35e5e51128992747a9393ab8ba53b8b
+
+
+https://github.com/janl/mustache.js
+
+http://sguha-work.github.io/WeatherAppDemo/#

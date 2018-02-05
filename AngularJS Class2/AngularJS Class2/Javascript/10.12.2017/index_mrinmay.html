@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Test 2nd</title>
+	<script
+    src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+<div class="">
+	<input type="number" id="sutdent_number" name="" placeholder="Enter Number of student">
+	<button onclick="(new studuntReport()).studentSubmit()" type="submit">submit</button>
+</div>
+
+
+<br/>
+
+<div id="studentForm">
+	<h3>Fill up the from</h3>
+</div>
+
+<br/>
+<div>
+	<caption>See you Result here</caption>
+	<table border="1">
+		<thead>
+			<tr>
+				<th>Student Name</th>
+				<th>Student Email</th>
+				<th>Age</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody id="seeResult">
+			
+		</tbody>
+	</table>
+</div>
+
+
+
+</body>
+
+<script>
+
+  /* ------ Total module ----- */	
+     var numberOfStudents;
+	 var studuntReport = (function(){
+	 		
+	 	    this.studentSubmit = (function () {
+	 	    	numberOfStudents = parseInt(document.getElementById("sutdent_number").value);
+				//alert(numberOfStudents);
+
+				var finalInputTemplate="";
+		 		  for (var i=1; i<=numberOfStudents; i++) {
+		 		  	var  singeInputTemplate=`
+		 		  			<div class="mainTemplate">
+		 		  			    <label>Enter your Name</label>
+		 		  			    <input type="text" name="" id="Name_`+i+`" value="">
+
+		 		  			    <label>Enter your Email</label>
+		 		  			    <input type="text" name="" id="Email_`+i+`" value="">
+
+		 		  			    <label>Enter your Age</label>
+		 		  			    <input type="text" name="" id="Age_`+i+`" value="">
+		 		  			</div>
+		 		  	  `
+		 		  	  finalInputTemplate += singeInputTemplate += `<br/>`;
+	  	 			}
+	  	 			//console.log(finalInputTemplate);
+	  	 			finalInputTemplate +=`
+	  	 			<button onclick="(new studuntReport()).studentReportOutput()" type="submit">Click here to show result</button>
+	  	 			`;
+	  	 			//alert(finalTemplate);
+	  	 			document.getElementById("studentForm").innerHTML = finalInputTemplate;
+
+		 	    });
+
+	 	    this.studentReportOutput = (function(){
+
+	 	    	var studentStore = [];
+
+	 	    	for (var i = 1; i <= numberOfStudents; i++) {
+	 	    	   var studentjson = {};	
+
+	 	    	   var Name  = document.getElementById("Name_"+i).value;
+	 	    	   var Email = document.getElementById("Email_"+i).value;
+	 	    	   var Age   = document.getElementById("Age_"+i).value;	
+
+	 	    	   studentjson.Name = Name;
+	 	    	   studentjson.Email = Email;
+	 	    	   studentjson.Age = Age;
+
+	 	    	   /*studentjson['Name'] = Name;
+	 	    	   studentjson.['Email'] = Email;
+	 	    	   studentjson.['Age'] = Age;*/
+	 	    	   studentStore.push(studentjson);
+	 	    	}
+	 	    	console.log(studentStore);
+
+	 	    	var resultPart = "";	
+	 	    	for (var i = 0; i<numberOfStudents; i++) {
+	 	    		resultPart +=`
+
+	 	    			<tr>
+	 	    			  <td>`+studentStore[i].Name+`</td>
+	 	    			  <td>`+studentStore[i].Email+`</td>
+	 	    			  <td>`+studentStore[i].Age+`</td>
+	 	    			  <td><button onclick="deleteMe(this)" class="delete">Delete</button></td>
+	 	    			</tr>
+
+	 	    		`;
+					/*<td>`+studentStore[i].["Name"]+`</td>
+					<td>`+studentStore[i].["Email"]+`</td>
+					<td>`+studentStore[i].["Age"]+`</td> */
+	 	    	}
+	 	    	//console.log(resultPart);
+	 	    	document.getElementById("seeResult").innerHTML = resultPart;
+	 	    });
+	  });
+
+	deleteMe = function(delt) {
+	    $(delt).parents("tr").remove();   
+	 }
+
+</script>
+</html>

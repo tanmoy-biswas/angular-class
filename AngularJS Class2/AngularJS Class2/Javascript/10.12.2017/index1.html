@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Class task</title>
+</head>
+
+<body>
+
+	<div id="inputDiv">
+        Input fields will apper here
+    </div>
+
+	<p>See your result</p>	
+	<table border="1">
+		<thead>
+			<th>Name</th>
+			<th>Email</th>
+            <th>Date of birth</th>
+            <th>Action</th>
+		</thead>
+		<tbody id="show_result">
+			
+		</tbody>
+	</table>
+
+</body>
+
+<script type="text/javascript">
+    // myModule is the main class. Every function inside the class should be created as this.functionName
+    var  numberOfStudents;
+    var studentArray = [];
+    var myModule = (function() {
+      // input is a function inside myModule class and as it is declared as this.input
+      // so we can call input()from outside of the class. Basically it is a public function
+      this.input = (function() {
+        numberOfStudents = parseInt(window.prompt("Enter how many data u want to give:"));
+        var finalTemplate = "";
+        for(var index = 1; index<=numberOfStudents; index++) {
+            var template = `
+                <div>
+                    <label> Enter name here</label>
+                    <input type="text" name="" id="txtName_`+index+`" placeholder="Enter you Name">
+                    <label> Enter email here</label>
+                    <input type="Email" name="" id="txtEmail_`+index+`" placeholder="Enter you Email">
+                    <label> Enter dateOf birth here</label>
+                    <input type="text" name="" id="txtDOB_`+index+`" placeholder="Enter you Date of birth">
+                </div>
+            `;
+            finalTemplate += template;
+        }
+        finalTemplate += `
+            <button onclick="(new myModule()).output()">Click me to submit</button>
+        `;
+        document.getElementById("inputDiv").innerHTML = finalTemplate;
+      });
+       
+
+      // output is a function inside myModule class and as it is declared as this.input
+      // so we can call input()from outside of the class. Basically it is a public function
+      // output function wil be called from the html page so it should be public and hence 
+      // writtten as this.output
+      this.output = (function() {console.log(numberOfStudents);
+          
+          for(var index=1; index<= numberOfStudents; index++) {
+            
+            // this is a json object in which the name the email and the dob of a student
+            // will be stored
+            var student = {};
+
+            var name = document.getElementById("txtName_"+index).value;
+            var email = document.getElementById("txtEmail_"+index).value;
+            var dob = document.getElementById("txtDOB_"+index).value;
+
+            student["name"]= name;
+            student.email= email; // student["email"]= email;
+            student["dob"] = dob; // student.dob = dob;
+
+            // finally the student object holding name email and dob is pushed to studentArray
+            studentArray.push(student);
+            
+          }
+          display(studentArray);
+        });
+
+        
+
+        var display = (function(studentArray) {
+            var trHTML = "";
+          for(var index=0; index<numberOfStudents; index++) {
+            trHTML += `
+                <tr>
+                    <td>`+studentArray[index].name+`</td>
+                    <td>`+studentArray[index]["email"]+`</td>
+                    <td>`+studentArray[index].dob+`</td>
+                    <td><button  onclick="(new myModule()).delete(`+index+`)">Delete</button>&nbsp; <button  onclick="(new myModule()).edit(`+index+`)">Edit</button></td>
+                    
+                </tr>
+            `;
+          }
+
+          document.getElementById("show_result").innerHTML = trHTML;
+
+        });
+
+        this.delete = (function(index) {
+            var newStudentArray = [];
+            for(var counter=0; counter<studentArray.length; counter++) {
+                if(counter!=index) {
+                    newStudentArray.push(studentArray[counter]);
+                }
+            }
+            studentArray=newStudentArray;
+            numberOfStudents -= 1;// numberOfStudents = numberOfStudents-1;
+            if(numberOfStudents < 0) {
+                numberOfStudents = 0;
+            }
+            display(studentArray);
+        });
+
+        this.edit = (function(editIndex) {
+            var name = window.prompt("Enter new name");
+            var email = window.prompt("Enter email");
+            var dob = window.prompt("Enter date of birth");
+
+            for(var index=0; index<studentArray.length; index++) {
+                if(index === editIndex) {
+                    studentArray[index].name = name;
+                    studentArray[index].email = email;
+                    studentArray[index].dob = dob;
+                }
+            }
+            display(studentArray);
+        });
+
+    });
+
+
+    // whenever we try to call a function inside a module/class to call them we have 
+    //to follow the following syntax (new className()).functionName()
+    (new myModule()).input();
+
+</script>
+
+</html>
+

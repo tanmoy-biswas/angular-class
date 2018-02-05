@@ -1,0 +1,184 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+
+</head>
+
+<body>
+    <label>Please enter number of students:</label>
+    <input type=number name=stNum id="stud_num" />
+    <button id="ok">OK</button>
+    <div id="inputform" style="margin:20px auto;">
+
+    </div>
+
+    <div id="editform" style="display:none">
+        <input type="text" name="" id="new-name" placeholder="enter new name" />
+        <input type="text" name="" id="new-email" placeholder="enter new email" />
+        <input type="text" name="" id="new-dob" placeholder="enter new date of birth" />
+        <button id="update">DONE</button>
+    </div>
+
+    <div style="margin:20px auto;">
+        <table border="1" cellpadding="5" cellspacing="0" id="st_table">
+            <thead>
+                <tr>
+                    <th>student name</th>
+                    <th>Email</th>
+                    <th>Date of birth</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="studentdata">
+
+            </tbody>
+        </table>
+    </div>
+    <script type=text/javascript>
+        var numberOfStudent;
+        var studentArray = [];
+        var student_module = (function() {
+            this.input_module = (function() {
+                document.getElementById("ok").onclick = function() {
+                    numberOfStudent = document.getElementById("stud_num").value;
+                    alert('student number:' + numberOfStudent);
+
+                    generate_form();
+
+                    function generate_form() {
+                        var finaltemp = "";
+
+                        for (var index = 1; index <= numberOfStudent; index++) {
+
+                            var temp =
+                                `<div>
+                            <input type="text" name="" id="s_name_` +
+                                index +
+                                `" placeholder="enter student name"/>
+<input type="email" name="" id="s_email_` +
+                                index +
+                                `"placeholder="enter student email" />
+<input type="text" name="" id="s_dob_` +
+                                index + `" placeholder="enter date of birth" />
+     </div>`;
+                            finaltemp += temp;
+                        }
+                        finaltemp +=
+                            `<button id="submit" onclick="(new student_module()).output_module()">submit</button>`;
+                        document.getElementById("inputform").innerHTML = finaltemp;
+
+                    }
+
+                };
+
+            });
+
+
+
+            //output of entered data
+            this.output_module = (function() {
+               
+                
+                for (var index = 1; index <= numberOfStudent; index++) {
+                    var Stdnt_json = {};
+                    var name = document.getElementById("s_name_" + index).value;
+                    var email = document.getElementById("s_email_" + index).value;
+                    var dob = document.getElementById("s_dob_" + index).value;
+                    console.log(name);
+                    console.log(email);
+                    console.log(dob);
+                    Stdnt_json["name"] = name;
+                    Stdnt_json["email"] = email;
+                    Stdnt_json["dob"] = dob;
+                    Stdnt_json["id"]=index;
+
+                    studentArray.push(Stdnt_json);
+
+                }
+               print_record(studentArray);
+            });
+                
+                var print_record=(function(studentArray) {
+                    console.log(studentArray);
+                    var recrow = "";
+                    for (var index = 0; index < numberOfStudent; index++) {
+                        recrow += `<tr id="stRow_` + index + `">
+                        <td>` +
+                            studentArray[index].name +
+                            `</td>
+<td>` + studentArray[index].email +
+                            `</td>
+                        <td>` + studentArray[index].dob +
+                            `</td>
+<td>
+ <div class="action">  <button id="delete_` + index + `" onclick="(new student_module()).deleterow(` +
+                            index + `)">delete</button>
+                            <button id="edit_`+index+`" onclick="(new student_module()).editrow(`+index+`)">edit</button>
+</td>
+                                </tr>`;
+
+                    }
+                    document.getElementById("studentdata").innerHTML = recrow;
+
+            });
+
+ //delete a row           
+this.deleterow=(function(index){
+var freshstudentArray=[];
+for(var count=0;count<studentArray.length;count++){
+    if(index!=count){
+        freshstudentArray.push(studentArray[count]);
+    }
+}
+studentArray=freshstudentArray;
+numberOfStudent -=1;
+if(numberOfStudent<0){
+numberOfStudent=0;
+}
+print_record(studentArray);
+});
+
+// edit a row
+this.editrow=(function(index){
+var newform= document.getElementById("editform");
+if (newform.style.display === "none") {
+        newform.style.display = "flex";
+    } else {
+        newform.style.display = "none";
+    }
+
+
+        console.log("row number:"+studentArray[index].id);
+ document.getElementById("update").onclick = function() {
+                console.log("array index:"+index);
+                    var Newname = document.getElementById("new-name").value;
+                    var Newemail = document.getElementById("new-email").value;
+                    var Newdob = document.getElementById("new-dob").value;
+                    console.log(Newname);
+                    console.log(Newemail);
+                    console.log(Newdob);
+                   /* var id = studentArray[index].id;
+                     studentArray[id].name= Newname;
+                    studentArray[id].email= Newemail;
+                    studentArray[id].dob = Newdob;
+
+                     */
+                    studentArray[index].name= Newname;
+                    studentArray[index].email= Newemail;
+                    studentArray[index].dob = Newdob;
+                alert("you are updating record");
+
+
+print_record(studentArray);
+
+ }
+ 
+});
+        
+        });
+        (new student_module()).input_module();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>tanmoy task </title>
+<!-- bootstrap css -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+</head>
+
+<body>
+    
+        <div class="container">
+            <div id="display_entry">
+                
+            </div>
+
+            <!-- result display in table -->
+            <div id="result_table">
+                
+            </div>
+        </div>
+
+</body>
+</html>
+
+<script type="text/javascript">
+    var user_input;
+    var main_function = (function() {
+        this.total_students = (function(){
+            user_input = parseInt(window.prompt("enter your value"));
+            var get_total_value ="";
+            for(var i=1; i<=user_input; i++){
+                var student_data_row = `
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                                <label for="exampleInputEmail1">NAME</label>
+                                <input id="name`+i+`" type="text" class="form-control" id="" placeholder="Enter your name">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                            <div class="form-group">
+                                    <label for="exampleInputEmail1">Email address</label>
+                                    <input id="email`+i+`" type="text" class="form-control" id="" placeholder="Enter email">
+                            </div>
+                    </div>
+                    <div class="col-md-4">
+                            <div class="form-group">
+                                    <label for="exampleInputEmail1">DATE OF BIRTH</label>
+                                    <input id="dob`+i+`" type="text" class="form-control" id="" placeholder="Enter DATE OF BIRTH">
+                            </div>
+                    </div>
+                </div>
+            `;
+            get_total_value += student_data_row;
+            }
+            get_total_value += `<button class="btn btn-primary" onclick="(new main_function()).output_data()"> Submit</button>`;
+
+            document.getElementById("display_entry").innerHTML = get_total_value;
+            
+        });
+        
+        this.output_data = (function(){
+            console.log(user_input);
+            var total_std=[];
+
+            for(var i=1; i<=user_input; i++){
+                var temp_std = {};
+                var name = document.getElementById("name"+i).value;
+                var email = document.getElementById("email"+i).value;
+                var dob = document.getElementById("dob"+i).value;
+
+                temp_std["name"] = name;
+                temp_std["email"] = email;
+                temp_std["dob"] = dob;
+
+                total_std.push(temp_std);
+            }
+
+            var show_student = "";
+            show_student += `
+            <p>See your result</p>	
+            <table class="table">
+                <thead class="thead-inverse">
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Date of birth</th>
+                    <th>delete</th>
+                <thead>
+            </thead>
+                <tbody>
+            `;
+
+            for(var j=0;j<user_input; j++){
+                show_student += `
+                <tr>
+                    <td>`+total_std[j]["name"]+`</td>
+                    <td>`+total_std[j]["email"]+`</td>
+                    <td>`+total_std[j]["dob"]+`</td>
+                    <td><button onclick="(new main_function()).delete_data(`+j+`)">delete</button></td>
+                </tr>
+            `;
+            }
+            show_student +=`
+            </tbody>
+            </table>
+            `;
+
+            document.getElementById('result_table').innerHTML = show_student;
+        })
+
+        this.delete_data = (function(id_val){
+            var total_std=[];
+
+            for(var i=1; i<=user_input; i++){
+                var temp_std = {};
+                var name = document.getElementById("name"+i).value;
+                var email = document.getElementById("email"+i).value;
+                var dob = document.getElementById("dob"+i).value;
+
+                temp_std["name"] = name;
+                temp_std["email"] = email;
+                temp_std["dob"] = dob;
+
+                total_std.push(temp_std);
+            }
+
+            var show_student = "";
+            show_student += `
+            <p>See your result</p>	
+            <table class="table">
+                <thead class="thead-inverse">
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Date of birth</th>
+                    <th>delete</th>
+                </thead>
+                <tbody>
+                    
+                
+            `;
+
+            for(var j=0;j<user_input; j++){
+                if(j!=id_val){
+                    show_student += `
+                    <tr>
+                        <td>`+total_std[j]["name"]+`</td>
+                        <td>`+total_std[j]["email"]+`</td>
+                        <td>`+total_std[j]["dob"]+`</td>
+                        <td><button onclick="(new main_function()).delete_data(`+j+`)">delete</button></td>
+                    </tr>
+                `;
+                }
+                
+            }
+            show_student +=`
+            </tbody>
+            </table>
+            `;
+
+            document.getElementById('result_table').innerHTML = show_student;
+        })
+
+    });
+    (new main_function()).total_students();
+    
+
+    
+</script>
+
